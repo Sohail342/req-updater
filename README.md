@@ -23,7 +23,7 @@ pip install req-updater
 ### From Source
 
 ```bash
-git clone https://github.com/yourusername/req-updater.git
+git clone https://github.com/Sohail342/req-updater.git
 cd req-updater
 pip install -e .
 ```
@@ -130,7 +130,7 @@ updater.cleanup_venv()
 ### Setting up Development Environment
 
 ```bash
-git clone https://github.com/yourusername/req-updater.git
+git clone https://github.com/Sohail342/req-updater.git
 cd req-updater
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
@@ -184,7 +184,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Support
 
 If you encounter any issues or have questions:
-- Check the [Issues](https://github.com/yourusername/req-updater/issues) page
+- Check the [Issues](https://github.com/Sohail342/req-updater/issues) page
 - Create a new issue with detailed information
 - Include your operating system, Python version, and error messages
 
