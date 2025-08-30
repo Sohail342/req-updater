@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "req-updater"
 version = "0.1.0"
 description = "Automatically updates package versions in requirements.txt files"
-authors = [{name = "Your Name", email = "your.email@example.com"}]
+authors = [{name = "Sohail Ahmad", email = "sohailahmad34280@gmail.com"}]
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.7"
@@ -31,8 +31,8 @@ dev = [
 req-updater = "req_updater.__main__:main"
 
 [project.urls]
-Homepage = "https://github.com/yourusername/req-updater"
-Issues = "https://github.com/yourusername/req-updater/issues"
+Homepage = "https://github.com/Sohail342/req-updater"
+Issues = "https://github.com/Sohail342/req-updater/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]

@@ -61,13 +61,13 @@ def create_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def validate_paths(requirements_path: str, venv_path: str) -> None:
+def validate_paths(requirements_path: str, venv_path: str | None) -> None:
     """
     Validate that provided paths are valid.
     
     Args:
         requirements_path (str): Path to requirements file.
-        venv_path (str): Path to virtual environment directory.
+        venv_path (str | None): Path to virtual environment directory. None means auto-detect.
         
     Raises:
         SystemExit: If paths are invalid.
@@ -81,6 +81,13 @@ def validate_paths(requirements_path: str, venv_path: str) -> None:
     if requirements_file.is_dir():
         print(f"Error: '{requirements_path}' is a directory, not a file", file=sys.stderr)
         sys.exit(1)
+    
+    # Only validate venv_path if explicitly provided
+    if venv_path is not None:
+        venv_dir = Path(venv_path)
+        if venv_dir.exists() and not venv_dir.is_dir():
+            print(f"Error: Virtual environment path '{venv_path}' is not a directory", file=sys.stderr)
+            sys.exit(1)
 
 
 def main() -> None:
@@ -94,8 +101,8 @@ def main() -> None:
     
     try:
         # Validate paths
-        validate_paths(args.requirements, args.venv or 'venv')
-        
+        validate_paths(args.requirements, args.venv)
+
         # Create updater instance
         updater = RequirementsUpdater(
             requirements_path=args.requirements,

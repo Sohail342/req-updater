@@ -28,10 +28,26 @@ class RequirementsUpdater:
         Args:
             requirements_path (str): Path to the requirements.txt file.
             venv_path (str, optional): Path to the virtual environment directory.
-                                       Defaults to 'venv' in the current directory.
+                                       If None, checks for existing 'venv' or '.venv' directories,
+                                       otherwise creates '.venv'.
         """
         self.requirements_path = Path(requirements_path)
-        self.venv_path = Path(venv_path) if venv_path else Path('venv')
+        
+        if venv_path:
+            self.venv_path = Path(venv_path)
+        else:
+            # Check for existing virtual environments in priority order
+            venv_dir = Path('venv')
+            dot_venv_dir = Path('.venv')
+            
+            if venv_dir.exists() and venv_dir.is_dir():
+                self.venv_path = venv_dir
+            elif dot_venv_dir.exists() and dot_venv_dir.is_dir():
+                self.venv_path = dot_venv_dir
+            else:
+                # Create new .venv if neither exists
+                self.venv_path = dot_venv_dir
+                
         self.verbose = False
         
     def run(self, verbose: bool = False) -> None:
@@ -136,7 +152,7 @@ class RequirementsUpdater:
         """
         Set up a virtual environment for package installation.
         
-        Creates a new virtual environment if one doesn't exist, or uses the existing one.
+        Uses existing venv or .venv directory if found, otherwise creates new .venv.
         
         Raises:
             RuntimeError: If virtual environment creation fails.
@@ -152,7 +168,8 @@ class RequirementsUpdater:
             cmd = [sys.executable, '-m', 'venv', str(self.venv_path)]
             
             if self.verbose:
-                print(f"Creating virtual environment with: {' '.join(cmd)}")
+                print(f"Creating new virtual environment: {self.venv_path}")
+                print(f"Running: {' '.join(cmd)}")
                 
             result = subprocess.run(cmd, check=True, capture_output=True, text=True)
             
